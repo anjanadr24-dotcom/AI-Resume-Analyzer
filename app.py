@@ -32,6 +32,7 @@ skills_list = [
 
 @app.route("/")
 def home():
+
     return render_template("index.html")
 
 
@@ -164,6 +165,54 @@ def analyze():
         suggestions.append(
             "Your resume is highly optimized for this role."
         )
+
+    # Interview Questions
+
+    interview_questions = []
+
+    if "python" in found_skills:
+
+        interview_questions.extend([
+
+            "Explain Python decorators.",
+
+            "What is list comprehension?",
+
+            "Difference between list and tuple?"
+
+        ])
+
+    if "sql" in found_skills:
+
+        interview_questions.extend([
+
+            "What is normalization?",
+
+            "Difference between WHERE and HAVING?",
+
+            "Explain JOINs in SQL."
+
+        ])
+
+    if "html" in found_skills:
+
+        interview_questions.extend([
+
+            "Difference between HTML and HTML5?",
+
+            "What are semantic tags?"
+
+        ])
+
+    if "machine learning" in found_skills:
+
+        interview_questions.extend([
+
+            "Difference between supervised and unsupervised learning?",
+
+            "Explain overfitting in ML."
+
+        ])
 
     # Recommended Roles
     recommended_roles = []
@@ -321,7 +370,9 @@ def analyze():
 
         skill_percentages=skill_percentages,
 
-        match_score=match_score
+        match_score=match_score,
+
+        interview_questions=interview_questions
     )
 
 
