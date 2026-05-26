@@ -41,24 +41,35 @@
               method="POST"
               enctype="multipart/form-data">
 
-            <!-- Upload Button -->
+            <!-- Drag & Drop Upload -->
 
-            <label for="resume-upload"
-                   class="custom-file-upload"
-                   id="upload-label">
+            <div class="drag-area"
+                 id="drag-area">
 
-                Upload Resume PDF
+                <div class="drag-text">
 
-            </label>
+                    Drag & Drop Resume Here
 
-            <input id="resume-upload"
-                   type="file"
-                   name="resume"
-                   required>
+                </div>
 
-            <!-- Uploaded File Name -->
+                <span>OR</span>
 
-            <p id="file-name"></p>
+                <label for="resume-upload"
+                       class="custom-file-upload"
+                       id="upload-label">
+
+                    Browse File
+
+                </label>
+
+                <input id="resume-upload"
+                       type="file"
+                       name="resume"
+                       required>
+
+                <p id="file-name"></p>
+
+            </div>
 
             <!-- Job Description -->
 
@@ -105,7 +116,7 @@
 
             </div>
 
-            <!-- Skill Chart -->
+            <!-- Skill Analytics -->
 
             <h3>Skill Analytics</h3>
 
@@ -165,15 +176,16 @@
                 {% endfor %}
 
             </ul>
+
             <!-- AI Resume Summary -->
 
-<h3>AI Resume Summary</h3>
+            <h3>AI Resume Summary</h3>
 
-<div class="summary-box">
+            <div class="summary-box">
 
-    {{ resume_summary }}
+                {{ resume_summary }}
 
-</div>
+            </div>
 
             <!-- Recommended Roles -->
 
@@ -202,19 +214,21 @@
                 {% endfor %}
 
             </ul>
-<!-- Interview Questions -->
 
-<h3>AI Interview Questions</h3>
+            <!-- AI Interview Questions -->
 
-<ul>
+            <h3>AI Interview Questions</h3>
 
-    {% for question in interview_questions %}
+            <ul>
 
-    <li>{{ question }}</li>
+                {% for question in interview_questions %}
 
-    {% endfor %}
+                <li>{{ question }}</li>
 
-</ul>
+                {% endfor %}
+
+            </ul>
+
             <!-- Download Report -->
 
             <br><br>
@@ -240,7 +254,7 @@
 
     <script>
 
-        // File Upload Display
+        // File Upload
 
         const resumeInput =
             document.getElementById(
@@ -292,6 +306,52 @@
                 document.body.classList.toggle(
                     "dark-mode"
                 );
+
+            }
+        );
+
+        // Drag & Drop Upload
+
+        const dragArea =
+        document.getElementById(
+            "drag-area"
+        );
+
+        dragArea.addEventListener(
+            "dragover",
+            (event) => {
+
+                event.preventDefault();
+
+                dragArea.style.borderColor =
+                    "#00f2fe";
+
+            }
+        );
+
+        dragArea.addEventListener(
+            "dragleave",
+            () => {
+
+                dragArea.style.borderColor =
+                    "rgba(255,255,255,0.4)";
+
+            }
+        );
+
+        dragArea.addEventListener(
+            "drop",
+            (event) => {
+
+                event.preventDefault();
+
+                resumeInput.files =
+                    event.dataTransfer.files;
+
+                fileName.textContent =
+                    "Uploaded: "
+                    +
+                    event.dataTransfer.files[0].name;
 
             }
         );
