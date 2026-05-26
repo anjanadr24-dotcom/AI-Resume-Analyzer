@@ -659,3 +659,58 @@ li:hover {
     line-height: 1.5;
 
 }
+/* Loader */
+
+#loader {
+
+    display: none;
+
+    margin-top: 20px;
+
+    text-align: center;
+
+}
+
+.spinner {
+
+    width: 50px;
+
+    height: 50px;
+
+    border: 5px solid rgba(255,255,255,0.2);
+
+    border-top: 5px solid #00f2fe;
+
+    border-radius: 50%;
+
+    animation: spin 1s linear infinite;
+
+    margin: auto;
+
+}
+
+#loader p {
+
+    margin-top: 15px;
+
+    color: white;
+
+    font-size: 18px;
+
+}
+
+@keyframes spin {
+
+    0% {
+
+        transform: rotate(0deg);
+
+    }
+
+    100% {
+
+        transform: rotate(360deg);
+
+    }
+
+}
