@@ -31,58 +31,62 @@
             🌙 Dark Mode
         </button>
 
-        <!-- Heading -->
+        <!-- Hero Section -->
 
-       <div class="hero-section">
+        <div class="hero-section">
 
-    <h1>
+            <h1>
 
-        AI Resume Analyzer
+                AI Resume Analyzer
 
-    </h1>
+            </h1>
 
-    <p class="hero-text">
+            <p class="hero-text">
 
-        Optimize your resume with AI-powered
-        ATS analysis, skill matching,
-        interview preparation, and resume insights.
+                Optimize your resume with AI-powered
+                ATS analysis, skill matching,
+                interview preparation, and resume insights.
 
-    </p>
+            </p>
 
-</div>
+        </div>
+
+        <!-- Feature Cards -->
+
         <div class="features">
 
-    <div class="feature-card">
+            <div class="feature-card">
 
-        <h3>ATS Analysis</h3>
+                <h3>ATS Analysis</h3>
 
-        <p>
-            Analyze resume ATS compatibility score.
-        </p>
+                <p>
+                    Analyze resume ATS compatibility score.
+                </p>
 
-    </div>
+            </div>
 
-    <div class="feature-card">
+            <div class="feature-card">
 
-        <h3>Skill Matching</h3>
+                <h3>Skill Matching</h3>
 
-        <p>
-            Match resumes with job descriptions.
-        </p>
+                <p>
+                    Match resumes with job descriptions.
+                </p>
 
-    </div>
+            </div>
 
-    <div class="feature-card">
+            <div class="feature-card">
 
-        <h3>Interview Questions</h3>
+                <h3>Interview Questions</h3>
 
-        <p>
-            Generate interview preparation questions.
-        </p>
+                <p>
+                    Generate interview preparation questions.
+                </p>
 
-    </div>
+            </div>
 
-</div>
+        </div>
+
         <!-- Upload Form -->
 
         <form action="/analyze"
@@ -132,9 +136,26 @@
 
             <!-- Analyze Button -->
 
-            <button type="submit">
+            <button type="submit"
+                    id="analyze-btn">
+
                 Analyze Resume
+
             </button>
+
+            <!-- Loader -->
+
+            <div id="loader">
+
+                <div class="spinner"></div>
+
+                <p>
+
+                    Analyzing Resume...
+
+                </p>
+
+            </div>
 
         </form>
 
@@ -400,6 +421,28 @@
                     "Uploaded: "
                     +
                     event.dataTransfer.files[0].name;
+
+            }
+        );
+
+        // Loading Animation
+
+        const analyzeBtn =
+        document.getElementById(
+            "analyze-btn"
+        );
+
+        const loader =
+        document.getElementById(
+            "loader"
+        );
+
+        analyzeBtn.addEventListener(
+            "click",
+            function () {
+
+                loader.style.display =
+                    "block";
 
             }
         );
