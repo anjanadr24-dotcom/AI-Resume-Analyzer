@@ -226,3 +226,60 @@ li:hover {
     transform: scale(1.05);
 
 }
+/* Dark Mode */
+
+.dark-mode {
+
+    background: #121212;
+
+}
+
+.dark-mode .container {
+
+    background: #1f1f1f;
+
+    color: white;
+
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3 {
+
+    color: white;
+
+}
+
+.dark-mode .result {
+
+    background: #2b2b2b;
+
+}
+
+.dark-mode li {
+
+    background: #3a3a3a;
+
+    color: white;
+
+}
+
+#dark-mode-toggle {
+
+    float: right;
+
+    margin-top: -20px;
+
+    background: black;
+
+    color: white;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    border: none;
+
+}
