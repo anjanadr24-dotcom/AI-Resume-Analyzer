@@ -10,8 +10,14 @@
 
     <title>AI Resume Analyzer</title>
 
+    <!-- CSS -->
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Chart.js -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -35,7 +41,7 @@
               method="POST"
               enctype="multipart/form-data">
 
-            <!-- Upload Resume -->
+            <!-- Upload Button -->
 
             <label for="resume-upload"
                    class="custom-file-upload"
@@ -50,7 +56,7 @@
                    name="resume"
                    required>
 
-            <!-- File Name -->
+            <!-- Uploaded File Name -->
 
             <p id="file-name"></p>
 
@@ -73,7 +79,7 @@
 
         </form>
 
-        <!-- Result Section -->
+        <!-- Results -->
 
         {% if skills %}
 
@@ -98,6 +104,12 @@
                 {{ match_score }}%
 
             </div>
+
+            <!-- Skill Chart -->
+
+            <h3>Skill Analytics</h3>
+
+            <canvas id="skillsChart"></canvas>
 
             <!-- Skills -->
 
@@ -245,7 +257,7 @@
             }
         );
 
-        // Dark Mode Toggle
+        // Dark Mode
 
         const darkBtn =
             document.getElementById(
@@ -262,6 +274,91 @@
 
             }
         );
+
+        // Skill Chart
+
+        {% if skills %}
+
+        const ctx =
+        document.getElementById(
+            'skillsChart'
+        ).getContext('2d');
+
+        const skillsChart =
+        new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+
+                    {% for skill in skills %}
+
+                    '{{ skill }}',
+
+                    {% endfor %}
+
+                ],
+
+                datasets: [{
+
+                    label: 'Skill Percentage',
+
+                    data: [
+
+                        {% for skill, percent in skill_percentages.items() %}
+
+                        {{ percent }},
+
+                        {% endfor %}
+
+                    ],
+
+                    backgroundColor: [
+
+                        '#007bff',
+                        '#00c6ff',
+                        '#4facfe',
+                        '#00f2fe',
+                        '#6a11cb',
+                        '#2575fc'
+
+                    ],
+
+                    borderRadius: 10
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                animation: {
+
+                    duration: 2000
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        max: 100
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        {% endif %}
 
     </script>
 
