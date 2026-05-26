@@ -539,3 +539,44 @@ li:hover {
     }
 
 }
+/* Drag & Drop Upload */
+
+.drag-area {
+
+    border: 2px dashed rgba(255,255,255,0.4);
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    margin-top: 20px;
+
+    transition: 0.3s;
+
+}
+
+.drag-area:hover {
+
+    background: rgba(255,255,255,0.08);
+
+}
+
+.drag-text {
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+
+}
+
+.drag-area span {
+
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #ddd;
+
+}
