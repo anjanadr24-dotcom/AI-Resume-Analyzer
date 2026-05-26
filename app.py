@@ -214,6 +214,34 @@ def analyze():
 
         ])
 
+    # AI Resume Summary
+
+    resume_summary = ""
+
+    if len(found_skills) >= 7:
+
+        resume_summary = (
+            "This candidate has strong technical skills "
+            "with excellent ATS compatibility for software "
+            "development and AI-related internships."
+        )
+
+    elif len(found_skills) >= 4:
+
+        resume_summary = (
+            "This candidate has good technical knowledge "
+            "and is suitable for beginner software and "
+            "web development roles."
+        )
+
+    else:
+
+        resume_summary = (
+            "This resume needs more technical skills, "
+            "projects, and certifications to improve "
+            "ATS performance."
+        )
+
     # Recommended Roles
     recommended_roles = []
 
@@ -372,7 +400,9 @@ def analyze():
 
         match_score=match_score,
 
-        interview_questions=interview_questions
+        interview_questions=interview_questions,
+
+        resume_summary=resume_summary
     )
 
 
