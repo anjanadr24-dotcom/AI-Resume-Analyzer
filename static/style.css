@@ -1,287 +1,210 @@
 body {
+
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+
+    background: linear-gradient(
+        135deg,
+        #141e30,
+        #243b55
+    );
+
+    min-height: 100vh;
+
     margin: 0;
+
     padding: 30px;
+
 }
+
+/* Main Container */
 
 .container {
-    width: 700px;
+
+    width: 75%;
+
     margin: auto;
-    background: white;
+
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    color: white;
+
     animation: fadeIn 1s ease-in-out;
+
 }
+
+/* Heading */
 
 h1 {
+
     text-align: center;
-    font-size: 50px;
-    margin-bottom: 40px;
-    color: #222;
+
+    font-size: 52px;
+
+    margin-bottom: 30px;
+
+    color: white;
+
+    text-shadow: 0px 3px 10px rgba(0,0,0,0.4);
+
 }
+
+/* Form */
 
 form {
+
     text-align: center;
-}
-#skillsChart {
-
-    margin-top: 30px;
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 15px;
 
 }
 
 /* Upload Button */
 
 .custom-file-upload {
+
     display: inline-block;
+
     padding: 15px 30px;
+
     cursor: pointer;
-    background: white;
-    color: #007bff;
-    border: 2px solid #007bff;
-    border-radius: 10px;
+
+    background: rgba(255,255,255,0.15);
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.3);
+
+    border-radius: 12px;
+
     font-weight: bold;
+
     transition: 0.3s;
+
     font-size: 16px;
+
 }
 
 .custom-file-upload:hover {
-    background: #007bff;
-    color: white;
+
+    background: rgba(255,255,255,0.3);
+
+    transform: scale(1.05);
+
 }
 
 /* Hide Default File Input */
 
 input[type="file"] {
+
     display: none;
+
 }
 
 /* Uploaded File Name */
 
 #file-name {
-    color: #007bff;
+
+    color: #00f2fe;
+
     font-weight: bold;
+
     margin-top: 15px;
+
     font-size: 16px;
+
 }
 
-/* Job Description Box */
+/* Textarea */
 
 .job-description {
+
     width: 90%;
+
     height: 120px;
+
     margin-top: 25px;
+
     padding: 15px;
-    border-radius: 10px;
-    border: 2px solid #ddd;
-    font-size: 15px;
-    resize: none;
+
+    border-radius: 12px;
+
+    border: none;
+
     outline: none;
+
+    font-size: 15px;
+
+    resize: none;
+
+    background: rgba(255,255,255,0.15);
+
+    color: white;
+
+    backdrop-filter: blur(10px);
+
 }
 
-.job-description:focus {
-    border-color: #007bff;
+.job-description::placeholder {
+
+    color: #ddd;
+
 }
 
-/* Analyze Button */
+/* Buttons */
 
 button {
+
     margin-top: 20px;
-    background: linear-gradient(to right, #007bff, #00c6ff);
+
+    background: linear-gradient(
+        to right,
+        #00c6ff,
+        #0072ff
+    );
+
     color: white;
+
     border: none;
+
     padding: 15px 30px;
-    border-radius: 10px;
+
+    border-radius: 12px;
+
     cursor: pointer;
+
     font-size: 18px;
+
     font-weight: bold;
+
     transition: 0.3s;
+
 }
 
 button:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
-}
-
-/* Result Section */
-
-.result {
-    margin-top: 40px;
-    background: #f7fbff;
-    padding: 30px;
-    border-radius: 15px;
-}
-
-/* ATS Score Circle */
-
-.score-circle {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: linear-gradient(to right, #00c6ff, #0072ff);
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
-}
-
-/* Headings */
-
-h2 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-}
-
-h3 {
-    margin-top: 30px;
-    color: #333;
-    border-left: 5px solid #00c6ff;
-    padding-left: 10px;
-}
-
-/* Skills */
-
-.skill-box {
-    margin-bottom: 20px;
-}
-
-.skill-name {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #222;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 20px;
-    background: #ddd;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.progress {
-    height: 100%;
-    background: linear-gradient(to right, #007bff, #00c6ff);
-    border-radius: 20px;
-}
-
-/* Match Score */
-
-.match-score {
-    background: linear-gradient(to right, #00c6ff, #0072ff);
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 15px;
-}
-
-/* Lists */
-
-ul {
-    padding-left: 20px;
-}
-
-li {
-    margin-bottom: 10px;
-    background: white;
-    padding: 12px;
-    border-radius: 8px;
-    list-style: none;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
-    transition: 0.3s;
-}
-
-li:hover {
-    transform: translateX(5px);
-}
-
-/* Animation */
-
-@keyframes fadeIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-.download-btn {
-
-    background: linear-gradient(to right, #28a745, #00c853);
-
-    margin-top: 30px;
-
-}
-
-.download-btn:hover {
 
     transform: scale(1.05);
 
-}
-/* Dark Mode */
-
-.dark-mode {
-
-    background: #121212;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
 
 }
 
-.dark-mode .container {
-
-    background: #1f1f1f;
-
-    color: white;
-
-}
-
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3 {
-
-    color: white;
-
-}
-
-.dark-mode .result {
-
-    background: #2b2b2b;
-
-}
-
-.dark-mode li {
-
-    background: #3a3a3a;
-
-    color: white;
-
-}
+/* Dark Mode Button */
 
 #dark-mode-toggle {
 
     float: right;
 
-    margin-top: -20px;
+    margin-top: -10px;
 
-    background: black;
+    background: rgba(0,0,0,0.5);
 
     color: white;
 
@@ -294,17 +217,157 @@ li:hover {
     border: none;
 
 }
-#skillsChart {
 
-    margin-top: 30px;
+/* Result Section */
 
-    background: white;
+.result {
 
-    padding: 20px;
+    margin-top: 40px;
 
-    border-radius: 15px;
+    background: rgba(255,255,255,0.08);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(12px);
 
 }
+
+/* ATS Score Circle */
+
+.score-circle {
+
+    width: 160px;
+
+    height: 160px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        to right,
+        #00c6ff,
+        #0072ff
+    );
+
+    color: white;
+
+    font-size: 42px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin: auto;
+
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.3);
+
+}
+
+/* Headings */
+
+h2 {
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: white;
+
+}
+
+h3 {
+
+    margin-top: 35px;
+
+    color: #00f2fe;
+
+    border-left: 5px solid #00f2fe;
+
+    padding-left: 12px;
+
+}
+
+/* Skill Box */
+
+.skill-box {
+
+    margin-bottom: 20px;
+
+}
+
+.skill-name {
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+
+    color: white;
+
+}
+
+/* Progress Bar */
+
+.progress-bar {
+
+    width: 100%;
+
+    height: 20px;
+
+    background: rgba(255,255,255,0.2);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+.progress {
+
+    height: 100%;
+
+    background: linear-gradient(
+        to right,
+        #00c6ff,
+        #0072ff
+    );
+
+    border-radius: 20px;
+
+}
+
+/* Match Score */
+
+.match-score {
+
+    background: linear-gradient(
+        to right,
+        #00c6ff,
+        #0072ff
+    );
+
+    color: white;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    margin-top: 15px;
+
+}
+
+/* Summary Box */
+
 .summary-box {
 
     margin-top: 20px;
@@ -326,5 +389,153 @@ li:hover {
     line-height: 1.6;
 
     box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+
+}
+
+/* Skill Chart */
+
+#skillsChart {
+
+    margin-top: 30px;
+
+    background: rgba(255,255,255,0.1);
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+}
+
+/* Lists */
+
+ul {
+
+    padding-left: 0;
+
+}
+
+li {
+
+    margin-bottom: 12px;
+
+    background: rgba(255,255,255,0.1);
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    list-style: none;
+
+    color: white;
+
+    transition: 0.3s;
+
+}
+
+li:hover {
+
+    transform: translateX(5px);
+
+    background: rgba(255,255,255,0.2);
+
+}
+
+/* Download Button */
+
+.download-btn {
+
+    background: linear-gradient(
+        to right,
+        #28a745,
+        #00c853
+    );
+
+}
+
+.download-btn:hover {
+
+    transform: scale(1.05);
+
+}
+
+/* Dark Mode */
+
+.dark-mode {
+
+    background: linear-gradient(
+        135deg,
+        #000000,
+        #1a1a1a
+    );
+
+}
+
+.dark-mode .container {
+
+    background: rgba(0,0,0,0.4);
+
+}
+
+.dark-mode .result {
+
+    background: rgba(255,255,255,0.05);
+
+}
+
+/* Animation */
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+/* Mobile Responsive */
+
+@media(max-width: 768px) {
+
+    .container {
+
+        width: 95%;
+
+        padding: 20px;
+
+    }
+
+    h1 {
+
+        font-size: 36px;
+
+    }
+
+    .score-circle {
+
+        width: 130px;
+
+        height: 130px;
+
+        font-size: 32px;
+
+    }
+
+    button {
+
+        width: 100%;
+
+    }
 
 }
