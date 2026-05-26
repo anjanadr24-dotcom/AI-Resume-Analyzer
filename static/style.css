@@ -305,3 +305,26 @@ li:hover {
     border-radius: 15px;
 
 }
+.summary-box {
+
+    margin-top: 20px;
+
+    background: linear-gradient(
+        to right,
+        #007bff,
+        #00c6ff
+    );
+
+    color: white;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+
+}
