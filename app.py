@@ -2,33 +2,15 @@ from flask import Flask, render_template, request, send_file
 import pdfplumber
 import os
 import random
-
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer
-)
-
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfgen import canvas
 
 app = Flask(__name__)
 
+# Upload Folder
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-# Global Variables
-
-score = 0
-match_score = 0
-found_skills = []
-matched_skills = []
-missing_skills = []
-recommended_roles = []
-suggestions = []
 
 # Skills Database
-
 skills_list = [
     "python",
     "java",
@@ -40,29 +22,23 @@ skills_list = [
     "sql",
     "machine learning",
     "artificial intelligence",
-    "flask"
+    "flask",
+    "react",
+    "django",
+    "mongodb",
+    "data analysis"
 ]
 
 
 @app.route("/")
 def home():
-
     return render_template("index.html")
 
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
 
-    global score
-    global match_score
-    global found_skills
-    global matched_skills
-    global missing_skills
-    global recommended_roles
-    global suggestions
-
     # Check Upload
-
     if "resume" not in request.files:
         return "No file uploaded"
 
@@ -73,16 +49,22 @@ def analyze():
 
     # Save Resume
     filename = "uploaded_resume.pdf"
+
     filepath = os.path.join(
-        app.config["UPLOAD_FOLDER"],
-        file.filename
+        UPLOAD_FOLDER,
+        filename
     )
 
     file.save(filepath)
 
-    # Extract Text From PDF
+    # Get Job Description
+    job_description = request.form.get(
+        "job_description",
+        ""
+    ).lower()
 
-    text = ""
+    # Extract Resume Text
+    resume_text = ""
 
     try:
 
@@ -90,37 +72,26 @@ def analyze():
 
             for page in pdf.pages:
 
-                extracted = page.extract_text()
+                text = page.extract_text()
 
-                if extracted:
-                    text += extracted.lower()
+                if text:
+                    resume_text += text.lower()
 
     except:
-
         return "Please upload a valid PDF resume."
 
-    # Job Description
-
-    job_description = request.form.get(
-        "job_description",
-        ""
-    ).lower()
-
     # Detect Skills
-
     found_skills = []
 
     for skill in skills_list:
 
-        if skill in text:
+        if skill in resume_text:
             found_skills.append(skill)
 
     # ATS Score
+    ats_score = min(len(found_skills) * 10, 100)
 
-    score = min(len(found_skills) * 10, 100)
-
-    # Match Analysis
-
+    # Match Skills
     matched_skills = []
     missing_skills = []
 
@@ -129,15 +100,12 @@ def analyze():
         if skill in job_description:
 
             if skill in found_skills:
-
                 matched_skills.append(skill)
 
             else:
-
                 missing_skills.append(skill)
 
     # Match Score
-
     if len(matched_skills) + len(missing_skills) > 0:
 
         match_score = int(
@@ -158,235 +126,210 @@ def analyze():
         match_score = 0
 
     # Skill Percentages
-
     skill_percentages = {}
 
     for skill in found_skills:
 
         skill_percentages[skill] = random.randint(70, 95)
 
-    # Suggestions
-
+    # AI Suggestions
     suggestions = []
 
-    if score < 50:
-
+    if "python" not in found_skills:
         suggestions.append(
-            "Add more technical skills."
+            "Add Python projects to strengthen your resume."
         )
 
+    if "machine learning" not in found_skills:
         suggestions.append(
-            "Improve project experience."
+            "Learn Machine Learning basics and add projects."
         )
 
+    if "flask" not in found_skills:
         suggestions.append(
-            "Include certifications."
+            "Build Flask web applications for better ATS ranking."
         )
 
-    elif score < 80:
-
+    if "sql" not in found_skills:
         suggestions.append(
-            "Add more projects."
+            "Add SQL/database skills."
         )
 
+    if len(found_skills) >= 7:
         suggestions.append(
-            "Improve resume formatting."
+            "Excellent technical skillset!"
         )
 
-    else:
-
+    if match_score >= 80:
         suggestions.append(
-            "Excellent resume!"
-        )
-
-        suggestions.append(
-            "You are ready for internships."
+            "Your resume is highly optimized for this role."
         )
 
     # Recommended Roles
-
     recommended_roles = []
 
     if "python" in found_skills:
-
         recommended_roles.append(
             "Python Developer"
         )
 
     if "machine learning" in found_skills:
-
         recommended_roles.append(
             "Machine Learning Intern"
         )
 
     if "artificial intelligence" in found_skills:
-
         recommended_roles.append(
             "AI Engineer Intern"
         )
 
     if "html" in found_skills or "css" in found_skills:
-
         recommended_roles.append(
             "Frontend Developer"
         )
 
     if "sql" in found_skills:
-
         recommended_roles.append(
             "Data Analyst"
         )
 
+    if "react" in found_skills:
+        recommended_roles.append(
+            "React Developer"
+        )
+
+    # Generate PDF Report
+    pdf_path = "resume_report.pdf"
+
+    c = canvas.Canvas(pdf_path)
+
+    c.setFont("Helvetica-Bold", 22)
+    c.drawString(160, 800, "AI Resume Report")
+
+    c.setFont("Helvetica", 14)
+
+    c.drawString(
+        50,
+        760,
+        f"ATS Resume Score: {ats_score}%"
+    )
+
+    c.drawString(
+        50,
+        730,
+        f"Job Match Score: {match_score}%"
+    )
+
+    # Skills
+    y = 690
+
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(50, y, "Detected Skills:")
+
+    y -= 30
+
+    c.setFont("Helvetica", 13)
+
+    for skill in found_skills:
+
+        c.drawString(
+            70,
+            y,
+            f"- {skill}"
+        )
+
+        y -= 20
+
+    # Matched Skills
+    y -= 20
+
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(50, y, "Matched Skills:")
+
+    y -= 30
+
+    c.setFont("Helvetica", 13)
+
+    for skill in matched_skills:
+
+        c.drawString(
+            70,
+            y,
+            f"- {skill}"
+        )
+
+        y -= 20
+
+    # Missing Skills
+    y -= 20
+
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(50, y, "Missing Skills:")
+
+    y -= 30
+
+    c.setFont("Helvetica", 13)
+
+    for skill in missing_skills:
+
+        c.drawString(
+            70,
+            y,
+            f"- {skill}"
+        )
+
+        y -= 20
+
+    # Suggestions
+    y -= 20
+
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(50, y, "AI Suggestions:")
+
+    y -= 30
+
+    c.setFont("Helvetica", 13)
+
+    for suggestion in suggestions:
+
+        c.drawString(
+            70,
+            y,
+            f"- {suggestion}"
+        )
+
+        y -= 20
+
+    c.save()
+
+    # Render HTML Page
     return render_template(
 
         "index.html",
 
+        score=ats_score,
+
         skills=found_skills,
 
-        score=score,
+        matched=matched_skills,
+
+        missing=missing_skills,
+
+        roles=recommended_roles,
 
         suggestions=suggestions,
 
         skill_percentages=skill_percentages,
 
-        recommended_roles=recommended_roles,
-
-        filename=file.filename,
-
-        match_score=match_score,
-
-        matched_skills=matched_skills,
-
-        missing_skills=missing_skills
+        match_score=match_score
     )
 
 
 @app.route("/download-report")
 def download_report():
 
-    pdf_path = "resume_report.pdf"
-
-    doc = SimpleDocTemplate(pdf_path)
-
-    styles = getSampleStyleSheet()
-
-    elements = []
-
-    # Title
-
-    title = Paragraph(
-        "AI Resume Analysis Report",
-        styles['Title']
-    )
-
-    elements.append(title)
-
-    elements.append(Spacer(1, 20))
-
-    # ATS Score
-
-    ats = Paragraph(
-        f"<b>ATS Resume Score:</b> {score}%",
-        styles['BodyText']
-    )
-
-    elements.append(ats)
-
-    elements.append(Spacer(1, 12))
-
-    # Match Score
-
-    match = Paragraph(
-        f"<b>Job Match Score:</b> {match_score}%",
-        styles['BodyText']
-    )
-
-    elements.append(match)
-
-    elements.append(Spacer(1, 20))
-
-    # Skills
-
-    skills_text = ", ".join(found_skills)
-
-    skills_para = Paragraph(
-        f"<b>Detected Skills:</b><br/>{skills_text}",
-        styles['BodyText']
-    )
-
-    elements.append(skills_para)
-
-    elements.append(Spacer(1, 20))
-
-    # Matched Skills
-
-    matched = ", ".join(matched_skills)
-
-    matched_para = Paragraph(
-        f"<b>Matched Skills:</b><br/>{matched}",
-        styles['BodyText']
-    )
-
-    elements.append(matched_para)
-
-    elements.append(Spacer(1, 20))
-
-    # Missing Skills
-
-    missing = ", ".join(missing_skills)
-
-    missing_para = Paragraph(
-        f"<b>Missing Skills:</b><br/>{missing}",
-        styles['BodyText']
-    )
-
-    elements.append(missing_para)
-
-    elements.append(Spacer(1, 20))
-
-    # Recommended Roles
-
-    roles = ", ".join(recommended_roles)
-
-    roles_para = Paragraph(
-        f"<b>Recommended Roles:</b><br/>{roles}",
-        styles['BodyText']
-    )
-
-    elements.append(roles_para)
-
-    elements.append(Spacer(1, 20))
-
-    # Suggestions
-
-    suggest = "<br/>".join(suggestions)
-
-    suggestion_para = Paragraph(
-        f"<b>Suggestions:</b><br/>{suggest}",
-        styles['BodyText']
-    )
-
-    elements.append(suggestion_para)
-
-    elements.append(Spacer(1, 30))
-
-    # Footer
-
-    footer = Paragraph(
-        "Generated by AI Resume Analyzer",
-        styles['Italic']
-    )
-
-    elements.append(footer)
-
-    # Build PDF
-
-    doc.build(elements)
-
-    # Download PDF
-
     return send_file(
-        pdf_path,
+        "resume_report.pdf",
         as_attachment=True
     )
 
